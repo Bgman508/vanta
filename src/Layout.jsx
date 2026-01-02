@@ -61,22 +61,24 @@ export default function Layout({ children, currentPageName }) {
               <Home className="w-4 h-4" />
             </Link>
 
-            <Link
-              to={createPageUrl('Dashboard')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                currentPageName === 'Dashboard'
-                  ? 'text-white bg-neutral-900'
-                  : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
-              }`}
-            >
-              <Compass className="w-4 h-4" />
-            </Link>
+            {user && (
+              <Link
+                to={createPageUrl('Vault')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  currentPageName === 'Vault'
+                    ? 'text-white bg-neutral-900'
+                    : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
+                }`}
+              >
+                <Compass className="w-4 h-4" />
+              </Link>
+            )}
 
             {canCreate && (
               <Link
-                to={createPageUrl('Studio')}
+                to={createPageUrl('StudioDashboard')}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  currentPageName === 'Studio'
+                  currentPageName === 'StudioDashboard'
                     ? 'text-white bg-neutral-900'
                     : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
                 }`}
@@ -88,9 +90,9 @@ export default function Layout({ children, currentPageName }) {
             {user ? (
               <>
                 <Link
-                  to={createPageUrl('Profile')}
+                  to={createPageUrl('Account')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    currentPageName === 'Profile'
+                    currentPageName === 'Account'
                       ? 'text-white bg-neutral-900'
                       : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
                   }`}
