@@ -9,6 +9,7 @@ import PublisherPortal from './pages/PublisherPortal';
 import EventRoom from './pages/EventRoom';
 import Vault from './pages/Vault';
 import Account from './pages/Account';
+import Documentation from './pages/Documentation';
 import __Layout from './Layout.jsx';
 
 
@@ -24,6 +25,7 @@ export const PAGES = {
     "EventRoom": EventRoom,
     "Vault": Vault,
     "Account": Account,
+    "Documentation": Documentation,
 }
 
 export const pagesConfig = {
