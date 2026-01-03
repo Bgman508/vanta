@@ -13,6 +13,11 @@ import Vault from './pages/Vault';
 import Onboarding from './pages/Onboarding';
 import Favorites from './pages/Favorites';
 import Notifications from './pages/Notifications';
+import Artist from './pages/Artist';
+import Admin from './pages/Admin';
+import ActivityFeed from './pages/ActivityFeed';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
 import __Layout from './Layout.jsx';
 
 
@@ -32,6 +37,11 @@ export const PAGES = {
     "Onboarding": Onboarding,
     "Favorites": Favorites,
     "Notifications": Notifications,
+    "Artist": Artist,
+    "Admin": Admin,
+    "ActivityFeed": ActivityFeed,
+    "Terms": Terms,
+    "Privacy": Privacy,
 }
 
 export const pagesConfig = {

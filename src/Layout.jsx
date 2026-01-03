@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useState, useEffect } from 'react';
-import { Home, Compass, Plus, User, LogOut, Heart, Bell } from 'lucide-react';
+import { Home, Compass, Plus, User, LogOut, Heart, Bell, Search } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
+import GlobalSearch from '../components/search/GlobalSearch';
 
 export default function Layout({ children, currentPageName }) {
   const [user, setUser] = useState(null);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => setUser(null));
@@ -58,6 +60,13 @@ export default function Layout({ children, currentPageName }) {
           </Link>
 
           <nav className="flex items-center gap-1">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="px-4 py-2 rounded-lg text-sm font-medium text-neutral-400 hover:text-white hover:bg-neutral-900/50 transition-colors"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+
             <Link
               to={createPageUrl('Home')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
