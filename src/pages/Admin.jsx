@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import PlatformStats from '../components/analytics/PlatformStats';
+import ExportData from '../components/features/ExportData';
 
 export default function Admin() {
   const [user, setUser] = useState(null);
@@ -192,6 +193,9 @@ export default function Admin() {
           </TabsContent>
 
           <TabsContent value="users" className="mt-6">
+            <div className="mb-4">
+              <ExportData data={users} filename="vanta_users" format="csv" />
+            </div>
             <div className="space-y-2">
               {users.slice(0, 20).map(u => (
                 <div key={u.id} className="flex items-center justify-between p-3 bg-neutral-900/50 border border-neutral-800 rounded-lg">
@@ -206,6 +210,9 @@ export default function Admin() {
           </TabsContent>
 
           <TabsContent value="experiences" className="mt-6">
+            <div className="mb-4">
+              <ExportData data={experiences} filename="vanta_experiences" format="csv" />
+            </div>
             <div className="space-y-2">
               {experiences.slice(0, 20).map(exp => (
                 <div key={exp.id} className="flex items-center justify-between p-3 bg-neutral-900/50 border border-neutral-800 rounded-lg">
@@ -225,6 +232,9 @@ export default function Admin() {
           </TabsContent>
 
           <TabsContent value="audit" className="mt-6">
+            <div className="mb-4">
+              <ExportData data={auditLogs} filename="vanta_audit_logs" format="csv" />
+            </div>
             <div className="space-y-2">
               {auditLogs.slice(0, 50).map(log => (
                 <div key={log.id} className="p-3 bg-neutral-900/50 border border-neutral-800 rounded-lg">

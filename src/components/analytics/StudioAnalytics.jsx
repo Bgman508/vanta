@@ -1,6 +1,7 @@
 import { TrendingUp, Users, DollarSign, Globe, Clock, BarChart3 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import TerritoryMap from './TerritoryMap';
 
 const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
 
@@ -233,6 +234,9 @@ export default function StudioAnalytics({ experiences, attendances, receipts }) 
           </CardContent>
         </Card>
       </div>
+
+      {/* Territory Map */}
+      <TerritoryMap attendances={attendances} />
     </div>
   );
 }

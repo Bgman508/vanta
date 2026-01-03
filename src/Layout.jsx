@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react';
 import { Home, Compass, Plus, User, LogOut, Heart, Bell, Search } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import GlobalSearch from '../components/search/GlobalSearch';
+import OfflineIndicator from '../components/features/OfflineIndicator';
+import CookieConsent from '../components/features/CookieConsent';
+import { ErrorBoundary } from '../components/features/ErrorBoundary';
 
 export default function Layout({ children, currentPageName }) {
   const [user, setUser] = useState(null);
@@ -162,13 +165,21 @@ export default function Layout({ children, currentPageName }) {
         </div>
       </header>
 
+      {/* Offline Indicator */}
+      <OfflineIndicator />
+
       {/* Main */}
       <main className="pt-16">
-        {children}
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
       </main>
 
       {/* Global Search */}
       <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
+
+      {/* Cookie Consent */}
+      <CookieConsent />
 
       {/* Footer */}
       <footer className="border-t border-neutral-900 mt-20">
