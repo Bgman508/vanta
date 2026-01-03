@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useState, useEffect } from 'react';
-import { Home, Compass, Plus, User, LogOut } from 'lucide-react';
+import { Home, Compass, Plus, User, LogOut, Heart, Bell } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Layout({ children, currentPageName }) {
   const [user, setUser] = useState(null);
@@ -10,6 +11,13 @@ export default function Layout({ children, currentPageName }) {
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => setUser(null));
   }, []);
+
+  const { data: notifications } = useQuery({
+    queryKey: ['notifications', user?.id],
+    queryFn: () => user ? base44.entities.Notification.filter({ userId: user.id, read: false }) : [],
+    enabled: !!user,
+    initialData: []
+  });
 
   const handleLogout = () => {
     base44.auth.logout();
@@ -62,16 +70,43 @@ export default function Layout({ children, currentPageName }) {
             </Link>
 
             {user && (
-              <Link
-                to={createPageUrl('Vault')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  currentPageName === 'Vault'
-                    ? 'text-white bg-neutral-900'
-                    : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
-                }`}
-              >
-                <Compass className="w-4 h-4" />
-              </Link>
+              <>
+                <Link
+                  to={createPageUrl('Vault')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    currentPageName === 'Vault'
+                      ? 'text-white bg-neutral-900'
+                      : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
+                  }`}
+                >
+                  <Compass className="w-4 h-4" />
+                </Link>
+
+                <Link
+                  to={createPageUrl('Favorites')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    currentPageName === 'Favorites'
+                      ? 'text-white bg-neutral-900'
+                      : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
+                  }`}
+                >
+                  <Heart className="w-4 h-4" />
+                </Link>
+
+                <Link
+                  to={createPageUrl('Notifications')}
+                  className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    currentPageName === 'Notifications'
+                      ? 'text-white bg-neutral-900'
+                      : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
+                  }`}
+                >
+                  <Bell className="w-4 h-4" />
+                  {notifications.length > 0 && (
+                    <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+                  )}
+                </Link>
+              </>
             )}
 
             {canCreate && (
