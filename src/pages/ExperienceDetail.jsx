@@ -10,6 +10,11 @@ import AccessGate from '../components/experience/AccessGate';
 import ExperiencePlayer from '../components/experience/ExperiencePlayer';
 import RevenueDisplay from '../components/revenue/RevenueEngine';
 import { Button } from '@/components/ui/button';
+import FavoriteButton from '../components/features/FavoriteButton';
+import FollowButton from '../components/features/FollowButton';
+import ShareButton from '../components/features/ShareButton';
+import GiftDialog from '../components/features/GiftDialog';
+import Recommendations from '../components/features/Recommendations';
 
 export default function ExperienceDetail() {
   const [user, setUser] = useState(null);
@@ -131,6 +136,14 @@ export default function ExperienceDetail() {
                     <span>{format(new Date(experience.scheduledAt), 'MMMM d, yyyy')}</span>
                   </div>
                 )}
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-wrap gap-3 pt-4">
+                <FavoriteButton experienceId={experience.id} user={user} />
+                <FollowButton artistId={experience.ownerId} user={user} />
+                <ShareButton experience={experience} />
+                {user && <GiftDialog experience={experience} user={user} />}
               </div>
 
               {/* Contributors */}

@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Plus, Trash2, Upload } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
+import RevenueCalculator from '../features/RevenueCalculator';
 
 export default function ExperienceForm({ user, experience, onSaved }) {
   const [formData, setFormData] = useState(experience || {
@@ -271,6 +272,9 @@ export default function ExperienceForm({ user, experience, onSaved }) {
           </div>
         </div>
       </div>
+
+      {/* Revenue Calculator */}
+      <RevenueCalculator />
 
       {/* Revenue Rules */}
       <div className="space-y-4">
