@@ -3,6 +3,7 @@ import { Lock, Unlock, DollarSign, Mail, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
+import PromoCodeInput from '../features/PromoCodeInput';
 
 const tierIcons = {
   free: Unlock,
@@ -20,30 +21,43 @@ const tierLabels = {
 
 export default function AccessGate({ experience, user, evaluation, onUnlocked }) {
   const [isUnlocking, setIsUnlocking] = useState(false);
+  const [promoApplied, setPromoApplied] = useState(null);
 
   const handleUnlock = async () => {
     if (!evaluation.matchedTier) return;
 
     setIsUnlocking(true);
     try {
+      const finalPrice = promoApplied?.finalPrice ?? evaluation.price ?? 0;
+
       // Create attendance record
       const attendance = await base44.entities.Attendance.create({
         experienceId: experience.id,
         userId: user.id,
         tier: evaluation.matchedTier,
-        amountPaid: evaluation.price || 0,
+        amountPaid: finalPrice,
         territory: user.territory || 'US',
         attendedAt: new Date().toISOString()
       });
 
       // Update experience revenue and count
-      const newRevenue = (experience.totalRevenue || 0) + (evaluation.price || 0);
+      const newRevenue = (experience.totalRevenue || 0) + finalPrice;
       const newCount = (experience.attendanceCount || 0) + 1;
 
       await base44.entities.Experience.update(experience.id, {
         totalRevenue: newRevenue,
         attendanceCount: newCount
       });
+
+      // Update promo code usage if applied
+      if (promoApplied?.promoId) {
+        const promo = await base44.entities.PromoCode.filter({ id: promoApplied.promoId });
+        if (promo[0]) {
+          await base44.entities.PromoCode.update(promoApplied.promoId, {
+            usedCount: (promo[0].usedCount || 0) + 1
+          });
+        }
+      }
 
       toast.success('Experience unlocked!');
       onUnlocked(attendance);
@@ -85,9 +99,22 @@ export default function AccessGate({ experience, user, evaluation, onUnlocked })
         </div>
 
         {evaluation.requiresPayment && (
-          <div className="text-3xl font-light text-white">
-            ${(evaluation.price / 100).toFixed(2)}
-          </div>
+          <>
+            <div className="text-3xl font-light text-white">
+              ${((promoApplied?.finalPrice ?? evaluation.price) / 100).toFixed(2)}
+              {promoApplied && (
+                <span className="text-base text-neutral-500 line-through ml-3">
+                  ${(evaluation.price / 100).toFixed(2)}
+                </span>
+              )}
+            </div>
+
+            <PromoCodeInput
+              experienceId={experience.id}
+              originalPrice={evaluation.price}
+              onApply={setPromoApplied}
+            />
+          </>
         )}
 
         {evaluation.matchedTier === 'paid' && evaluation.requiresPayment && (

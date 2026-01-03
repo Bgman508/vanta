@@ -166,6 +166,48 @@ export default function Layout({ children, currentPageName }) {
       <main className="pt-16">
         {children}
       </main>
+
+      {/* Global Search */}
+      <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
+
+      {/* Footer */}
+      <footer className="border-t border-neutral-900 mt-20">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="text-xl mb-4">◆ VANTA</div>
+              <p className="text-sm text-neutral-500">Experience Music. Not streams.</p>
+            </div>
+            <div>
+              <h4 className="text-sm font-medium text-white mb-3">Platform</h4>
+              <div className="space-y-2 text-sm text-neutral-500">
+                <Link to={createPageUrl('Documentation')} className="block hover:text-white">Documentation</Link>
+                <Link to={createPageUrl('Terms')} className="block hover:text-white">Terms of Service</Link>
+                <Link to={createPageUrl('Privacy')} className="block hover:text-white">Privacy Policy</Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-sm font-medium text-white mb-3">For Artists</h4>
+              <div className="space-y-2 text-sm text-neutral-500">
+                <Link to={createPageUrl('StudioDashboard')} className="block hover:text-white">Studio</Link>
+                <Link to={createPageUrl('LabelConsole')} className="block hover:text-white">Label Console</Link>
+                <Link to={createPageUrl('PublisherPortal')} className="block hover:text-white">Publisher Portal</Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-sm font-medium text-white mb-3">Community</h4>
+              <div className="space-y-2 text-sm text-neutral-500">
+                <Link to={createPageUrl('ActivityFeed')} className="block hover:text-white">Activity Feed</Link>
+                <Link to={createPageUrl('Favorites')} className="block hover:text-white">My Favorites</Link>
+                <Link to={createPageUrl('Vault')} className="block hover:text-white">My Vault</Link>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 pt-8 border-t border-neutral-900 text-center text-sm text-neutral-600">
+            © 2026 VANTA. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

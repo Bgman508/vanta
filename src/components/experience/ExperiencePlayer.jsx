@@ -1,10 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Play, Pause, Volume2, Maximize } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { base44 } from '@/api/base44Client';
 
-export default function ExperiencePlayer({ media }) {
+export default function ExperiencePlayer({ media, experienceId, user }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    if (!user || !experienceId) return;
+
+    const trackPlay = async () => {
+      const existing = await base44.entities.PlayHistory.filter({
+        userId: user.id,
+        experienceId
+      });
+
+      if (existing.length > 0) {
+        await base44.entities.PlayHistory.update(existing[0].id, {
+          lastAccessedAt: new Date().toISOString(),
+          accessCount: (existing[0].accessCount || 0) + 1
+        });
+      } else {
+        await base44.entities.PlayHistory.create({
+          userId: user.id,
+          experienceId,
+          lastAccessedAt: new Date().toISOString(),
+          accessCount: 1
+        });
+      }
+    };
+
+    trackPlay();
+  }, [user, experienceId]);
 
   if (!media || media.length === 0) {
     return (

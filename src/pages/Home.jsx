@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import ExperienceCard from '../components/experience/ExperienceCard';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Filter } from 'lucide-react';
+import RecentlyPlayed from '../components/features/RecentlyPlayed';
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -53,6 +54,9 @@ export default function Home() {
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 py-16 space-y-12">
+        {/* Recently Played */}
+        {user && <RecentlyPlayed user={user} />}
+
         {/* Filters */}
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-light text-white">Discover</h2>

@@ -15,6 +15,7 @@ import FollowButton from '../components/features/FollowButton';
 import ShareButton from '../components/features/ShareButton';
 import GiftDialog from '../components/features/GiftDialog';
 import Recommendations from '../components/features/Recommendations';
+import ReportDialog from '../components/features/ReportDialog';
 
 export default function ExperienceDetail() {
   const [user, setUser] = useState(null);
@@ -144,6 +145,7 @@ export default function ExperienceDetail() {
                 <FollowButton artistId={experience.ownerId} user={user} />
                 <ShareButton experience={experience} />
                 {user && <GiftDialog experience={experience} user={user} />}
+                {user && <ReportDialog entityType="EXPERIENCE" entityId={experience.id} user={user} />}
               </div>
 
               {/* Contributors */}
@@ -167,7 +169,7 @@ export default function ExperienceDetail() {
           <div className="space-y-8">
             {hasAccess ? (
               <>
-                <ExperiencePlayer media={experience.media} />
+                <ExperiencePlayer media={experience.media} experienceId={experience.id} user={user} />
 
                 {/* Revenue Display (Owner Only) */}
                 {isOwner && (
