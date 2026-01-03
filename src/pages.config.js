@@ -18,6 +18,7 @@ import Admin from './pages/Admin';
 import ActivityFeed from './pages/ActivityFeed';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import Search from './pages/Search';
 import __Layout from './Layout.jsx';
 
 
@@ -42,6 +43,7 @@ export const PAGES = {
     "ActivityFeed": ActivityFeed,
     "Terms": Terms,
     "Privacy": Privacy,
+    "Search": Search,
 }
 
 export const pagesConfig = {

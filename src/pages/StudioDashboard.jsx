@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { BarChart3, FolderOpen, Upload, Settings, DollarSign } from 'lucide-react';
+import { BarChart3, FolderOpen, Upload, Settings, DollarSign, Ticket } from 'lucide-react';
 import StudioAnalytics from '../components/analytics/StudioAnalytics';
 import ExperienceForm from '../components/studio/ExperienceForm';
 import PayoutDashboard from '../components/admin/PayoutDashboard';
+import InviteCodeGenerator from '../components/features/InviteCodeGenerator';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 
@@ -92,6 +93,10 @@ export default function StudioDashboard() {
               <DollarSign className="w-4 h-4 mr-2" />
               Payouts
             </TabsTrigger>
+            <TabsTrigger value="invites">
+              <Ticket className="w-4 h-4 mr-2" />
+              Invite Codes
+            </TabsTrigger>
             <TabsTrigger value="create">
               <Upload className="w-4 h-4 mr-2" />
               Create
@@ -108,6 +113,14 @@ export default function StudioDashboard() {
 
           <TabsContent value="payouts" className="mt-6">
             <PayoutDashboard user={user} />
+          </TabsContent>
+
+          <TabsContent value="invites" className="mt-6">
+            <div className="grid lg:grid-cols-2 gap-6">
+              {experiences.map(exp => (
+                <InviteCodeGenerator key={exp.id} experience={exp} user={user} />
+              ))}
+            </div>
           </TabsContent>
 
           <TabsContent value="experiences" className="mt-6">

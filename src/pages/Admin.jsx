@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Shield, AlertTriangle, Users, Music, DollarSign, Activity } from 'lucide-react';
+import { Shield, AlertTriangle, Users, Music, DollarSign, Activity, BarChart3 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+import PlatformStats from '../components/analytics/PlatformStats';
 
 export default function Admin() {
   const [user, setUser] = useState(null);
@@ -127,8 +128,12 @@ export default function Admin() {
           </Card>
         </div>
 
-        <Tabs defaultValue="reports">
+        <Tabs defaultValue="overview">
           <TabsList className="bg-neutral-900 border border-neutral-800">
+            <TabsTrigger value="overview">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Overview
+            </TabsTrigger>
             <TabsTrigger value="reports">
               <AlertTriangle className="w-4 h-4 mr-2" />
               Reports
@@ -146,6 +151,10 @@ export default function Admin() {
               Audit Log
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="overview" className="mt-6">
+            <PlatformStats />
+          </TabsContent>
 
           <TabsContent value="reports" className="mt-6">
             <div className="space-y-3">
