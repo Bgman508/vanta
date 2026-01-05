@@ -16,6 +16,7 @@ import ShareButton from '../components/features/ShareButton';
 import GiftDialog from '../components/features/GiftDialog';
 import Recommendations from '../components/features/Recommendations';
 import ReportDialog from '../components/features/ReportDialog';
+import CommentSection from '../components/experience/CommentSection';
 
 export default function ExperienceDetail() {
   const [user, setUser] = useState(null);
@@ -190,6 +191,13 @@ export default function ExperienceDetail() {
             )}
           </div>
         </div>
+
+        {/* Comments */}
+        {experience.interactionEnabled && (
+          <div className="mt-16">
+            <CommentSection experienceId={experience.id} user={user} />
+          </div>
+        )}
 
         {/* Recommendations */}
         {user && (

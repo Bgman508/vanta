@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 import PlatformStats from '../components/analytics/PlatformStats';
 import ExportData from '../components/features/ExportData';
+import VerificationQueue from '../components/admin/VerificationQueue';
 
 export default function Admin() {
   const [user, setUser] = useState(null);
@@ -154,7 +155,10 @@ export default function Admin() {
           </TabsList>
 
           <TabsContent value="overview" className="mt-6">
-            <PlatformStats />
+            <div className="space-y-6">
+              <PlatformStats />
+              <VerificationQueue />
+            </div>
           </TabsContent>
 
           <TabsContent value="reports" className="mt-6">

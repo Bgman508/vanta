@@ -1,147 +1,120 @@
 import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { toast } from 'sonner';
-import { User, Shield } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { User as UserIcon, Music, Heart, Users, Calendar } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import ExperienceCard from '../components/experience/ExperienceCard';
+import { format } from 'date-fns';
 
 export default function Profile() {
   const [user, setUser] = useState(null);
-  const [formData, setFormData] = useState({});
-  const [isSaving, setIsSaving] = useState(false);
+  const urlParams = new URLSearchParams(window.location.search);
+  const profileId = urlParams.get('id');
 
   useEffect(() => {
-    base44.auth.me().then(user => {
-      setUser(user);
-      setFormData({
-        bio: user.bio || '',
-        avatar_url: user.avatar_url || '',
-        territory: user.territory || 'US'
-      });
-    }).catch(() => {
-      base44.auth.redirectToLogin();
-    });
+    base44.auth.me().then(setUser).catch(() => setUser(null));
   }, []);
 
-  const handleSave = async () => {
-    setIsSaving(true);
-    try {
-      await base44.auth.updateMe(formData);
-      toast.success('Profile updated');
-      const updated = await base44.auth.me();
-      setUser(updated);
-    } catch (error) {
-      toast.error('Failed to update profile');
-      console.error(error);
-    } finally {
-      setIsSaving(false);
-    }
-  };
+  const { data: profile } = useQuery({
+    queryKey: ['profile', profileId],
+    queryFn: async () => {
+      const users = await base44.entities.User.filter({ id: profileId });
+      return users[0];
+    },
+    enabled: !!profileId
+  });
 
-  if (!user) {
+  const { data: favorites } = useQuery({
+    queryKey: ['user-favorites', profileId],
+    queryFn: () => base44.entities.Favorite.filter({ userId: profileId }),
+    enabled: !!profileId,
+    initialData: []
+  });
+
+  const { data: following } = useQuery({
+    queryKey: ['user-following', profileId],
+    queryFn: () => base44.entities.Follow.filter({ followerId: profileId }),
+    enabled: !!profileId,
+    initialData: []
+  });
+
+  const { data: activities } = useQuery({
+    queryKey: ['user-activities', profileId],
+    queryFn: () => base44.entities.Activity.filter({ userId: profileId, visibility: 'PUBLIC' }, '-created_date', 50),
+    enabled: !!profileId,
+    initialData: []
+  });
+
+  if (!profile) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-neutral-500">Loading...</div>
+        <div className="text-neutral-500">Profile not found</div>
       </div>
     );
   }
 
+  const isOwnProfile = user?.id === profileId;
+
   return (
     <div className="min-h-screen">
-      <div className="max-w-3xl mx-auto px-6 py-12 space-y-8">
-        {/* Header */}
-        <div className="flex items-center gap-4">
-          <div className="w-20 h-20 bg-neutral-900 rounded-full flex items-center justify-center overflow-hidden">
-            {formData.avatar_url ? (
-              <img src={formData.avatar_url} alt="" className="w-full h-full object-cover" />
+      <div className="max-w-7xl mx-auto px-6 py-12 space-y-8">
+        <div className="flex items-start gap-6">
+          <div className="w-32 h-32 bg-neutral-900 rounded-full overflow-hidden">
+            {profile.avatar_url ? (
+              <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" />
             ) : (
-              <User className="w-8 h-8 text-neutral-600" />
+              <div className="w-full h-full flex items-center justify-center text-5xl text-neutral-600">
+                {profile.full_name?.[0]}
+              </div>
             )}
           </div>
-          <div>
-            <h1 className="text-3xl font-light">{user.full_name}</h1>
-            <p className="text-neutral-400">{user.email}</p>
+
+          <div className="flex-1">
+            <h1 className="text-4xl font-light mb-2">{profile.full_name}</h1>
+            <p className="text-neutral-400 mb-4">{profile.bio}</p>
+
+            <div className="flex items-center gap-6 text-sm text-neutral-500">
+              <div className="flex items-center gap-2">
+                <Heart className="w-4 h-4" />
+                <span>{favorites.length} favorites</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                <span>{following.length} following</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <span>Joined {format(new Date(profile.created_date), 'MMMM yyyy')}</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Role Badge */}
-        <div className="flex items-center gap-3 p-4 bg-neutral-900/50 border border-neutral-800 rounded-xl">
-          <Shield className="w-5 h-5 text-indigo-500" />
-          <div>
-            <div className="text-sm text-neutral-400">Role</div>
-            <div className="text-lg font-medium text-white">{user.role}</div>
-          </div>
-          {user.verified && (
-            <span className="ml-auto px-3 py-1 bg-emerald-500/20 text-emerald-500 rounded-full text-xs font-medium">
-              VERIFIED
-            </span>
-          )}
-        </div>
+        <Tabs defaultValue="activity">
+          <TabsList className="bg-neutral-900 border border-neutral-800">
+            <TabsTrigger value="activity">Activity</TabsTrigger>
+            <TabsTrigger value="favorites">Favorites</TabsTrigger>
+          </TabsList>
 
-        {/* Form */}
-        <div className="space-y-6 p-6 bg-neutral-900/50 border border-neutral-800 rounded-xl">
-          <h2 className="text-xl font-medium text-white">Profile Settings</h2>
-
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label className="text-neutral-400">Avatar URL</Label>
-              <Input
-                value={formData.avatar_url}
-                onChange={(e) => setFormData({ ...formData, avatar_url: e.target.value })}
-                placeholder="https://..."
-                className="bg-neutral-900 border-neutral-800"
-              />
+          <TabsContent value="activity" className="mt-6">
+            <div className="space-y-3">
+              {activities.map(activity => (
+                <div key={activity.id} className="p-4 bg-neutral-900/50 border border-neutral-800 rounded-lg">
+                  <p className="text-sm text-neutral-300">{activity.type}</p>
+                  <p className="text-xs text-neutral-500 mt-1">
+                    {format(new Date(activity.created_date), 'MMM d, h:mm a')}
+                  </p>
+                </div>
+              ))}
             </div>
+          </TabsContent>
 
-            <div className="space-y-2">
-              <Label className="text-neutral-400">Bio</Label>
-              <Textarea
-                value={formData.bio}
-                onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                placeholder="Tell us about yourself..."
-                rows={4}
-                className="bg-neutral-900 border-neutral-800"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-neutral-400">Territory</Label>
-              <Select
-                value={formData.territory}
-                onValueChange={(value) => setFormData({ ...formData, territory: value })}
-              >
-                <SelectTrigger className="bg-neutral-900 border-neutral-800">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="US">United States</SelectItem>
-                  <SelectItem value="UK">United Kingdom</SelectItem>
-                  <SelectItem value="CA">Canada</SelectItem>
-                  <SelectItem value="DE">Germany</SelectItem>
-                  <SelectItem value="FR">France</SelectItem>
-                  <SelectItem value="JP">Japan</SelectItem>
-                  <SelectItem value="AU">Australia</SelectItem>
-                  <SelectItem value="BR">Brazil</SelectItem>
-                  <SelectItem value="MX">Mexico</SelectItem>
-                  <SelectItem value="ES">Spain</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="flex justify-end pt-4 border-t border-neutral-800">
-            <Button
-              onClick={handleSave}
-              disabled={isSaving}
-              className="bg-indigo-600 hover:bg-indigo-700"
-            >
-              {isSaving ? 'Saving...' : 'Save Changes'}
-            </Button>
-          </div>
-        </div>
+          <TabsContent value="favorites" className="mt-6">
+            <p className="text-neutral-500 text-center py-12">
+              {isOwnProfile ? 'Your favorites are private' : 'This user\'s favorites are private'}
+            </p>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
