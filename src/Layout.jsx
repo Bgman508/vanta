@@ -4,10 +4,10 @@ import { base44 } from '@/api/base44Client';
 import { useState, useEffect } from 'react';
 import { Home, Compass, Plus, User, LogOut, Heart, Bell, Search } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import GlobalSearch from '../components/search/GlobalSearch';
-import OfflineIndicator from '../components/features/OfflineIndicator';
-import CookieConsent from '../components/features/CookieConsent';
-import { ErrorBoundary } from '../components/features/ErrorBoundary';
+import GlobalSearch from './components/search/GlobalSearch';
+import OfflineIndicator from './components/features/OfflineIndicator';
+import CookieConsent from './components/features/CookieConsent';
+import { ErrorBoundary } from './components/features/ErrorBoundary';
 
 export default function Layout({ children, currentPageName }) {
   const [user, setUser] = useState(null);
