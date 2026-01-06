@@ -8,6 +8,8 @@ import GlobalSearch from './components/search/GlobalSearch';
 import OfflineIndicator from './components/features/OfflineIndicator';
 import CookieConsent from './components/features/CookieConsent';
 import { ErrorBoundary } from './components/features/ErrorBoundary';
+import KeyboardShortcuts from './components/system/KeyboardShortcuts';
+import ThemeSwitcher from './components/system/ThemeSwitcher';
 
 export default function Layout({ children, currentPageName }) {
   const [user, setUser] = useState(null);
@@ -133,19 +135,21 @@ export default function Layout({ children, currentPageName }) {
                 )}
 
                 {canCreate && (
-              <Link
-                to={createPageUrl('StudioDashboard')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  currentPageName === 'StudioDashboard'
-                    ? 'text-white bg-neutral-900'
-                    : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
-                }`}
-              >
-                <Plus className="w-4 h-4" />
-              </Link>
-            )}
+                  <Link
+                    to={createPageUrl('StudioDashboard')}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      currentPageName === 'StudioDashboard'
+                        ? 'text-white bg-neutral-900'
+                        : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
+                    }`}
+                  >
+                    <Plus className="w-4 h-4" />
+                  </Link>
+                )}
 
-            {user ? (
+                <ThemeSwitcher />
+
+                {user ? (
               <>
                 <Link
                   to={createPageUrl('Account')}
@@ -192,6 +196,9 @@ export default function Layout({ children, currentPageName }) {
       {/* Cookie Consent */}
       <CookieConsent />
 
+      {/* Keyboard Shortcuts */}
+      <KeyboardShortcuts />
+
       {/* Footer */}
       <footer className="border-t border-neutral-900 mt-20">
         <div className="max-w-7xl mx-auto px-6 py-8">
@@ -222,6 +229,8 @@ export default function Layout({ children, currentPageName }) {
                 <Link to={createPageUrl('Trending')} className="block hover:text-white">Trending</Link>
                 <Link to={createPageUrl('Collections')} className="block hover:text-white">Collections</Link>
                 <Link to={createPageUrl('Leaderboard')} className="block hover:text-white">Leaderboard</Link>
+                <Link to={createPageUrl('BeatsMarketplace')} className="block hover:text-white">Beats</Link>
+                <Link to={createPageUrl('Academy')} className="block hover:text-white">Academy</Link>
                 <Link to={createPageUrl('ActivityFeed')} className="block hover:text-white">Activity Feed</Link>
                 <Link to={createPageUrl('Favorites')} className="block hover:text-white">My Favorites</Link>
                 <Link to={createPageUrl('Vault')} className="block hover:text-white">My Vault</Link>

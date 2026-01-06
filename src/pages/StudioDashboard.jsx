@@ -7,6 +7,7 @@ import StudioAnalytics from '../components/analytics/StudioAnalytics';
 import ExperienceForm from '../components/studio/ExperienceForm';
 import PayoutDashboard from '../components/admin/PayoutDashboard';
 import InviteCodeGenerator from '../components/features/InviteCodeGenerator';
+import DistributionHub from '../components/creator/DistributionHub';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 

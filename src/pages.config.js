@@ -10,6 +10,8 @@ import ExperienceDetail from './pages/ExperienceDetail';
 import Favorites from './pages/Favorites';
 import Home from './pages/Home';
 import LabelConsole from './pages/LabelConsole';
+import Leaderboard from './pages/Leaderboard';
+import Messages from './pages/Messages';
 import Notifications from './pages/Notifications';
 import Onboarding from './pages/Onboarding';
 import Privacy from './pages/Privacy';
@@ -22,8 +24,8 @@ import StudioDashboard from './pages/StudioDashboard';
 import Terms from './pages/Terms';
 import Trending from './pages/Trending';
 import Vault from './pages/Vault';
-import Messages from './pages/Messages';
-import Leaderboard from './pages/Leaderboard';
+import BeatsMarketplace from './pages/BeatsMarketplace';
+import Academy from './pages/Academy';
 import __Layout from './Layout.jsx';
 
 
@@ -40,6 +42,8 @@ export const PAGES = {
     "Favorites": Favorites,
     "Home": Home,
     "LabelConsole": LabelConsole,
+    "Leaderboard": Leaderboard,
+    "Messages": Messages,
     "Notifications": Notifications,
     "Onboarding": Onboarding,
     "Privacy": Privacy,
@@ -52,8 +56,8 @@ export const PAGES = {
     "Terms": Terms,
     "Trending": Trending,
     "Vault": Vault,
-    "Messages": Messages,
-    "Leaderboard": Leaderboard,
+    "BeatsMarketplace": BeatsMarketplace,
+    "Academy": Academy,
 }
 
 export const pagesConfig = {
