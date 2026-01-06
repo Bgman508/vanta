@@ -22,6 +22,8 @@ import StudioDashboard from './pages/StudioDashboard';
 import Terms from './pages/Terms';
 import Trending from './pages/Trending';
 import Vault from './pages/Vault';
+import Messages from './pages/Messages';
+import Leaderboard from './pages/Leaderboard';
 import __Layout from './Layout.jsx';
 
 
@@ -50,6 +52,8 @@ export const PAGES = {
     "Terms": Terms,
     "Trending": Trending,
     "Vault": Vault,
+    "Messages": Messages,
+    "Leaderboard": Leaderboard,
 }
 
 export const pagesConfig = {

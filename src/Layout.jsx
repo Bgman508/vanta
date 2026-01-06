@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useState, useEffect } from 'react';
-import { Home, Compass, Plus, User, LogOut, Heart, Bell, Search } from 'lucide-react';
+import { Home, Compass, Plus, User, LogOut, Heart, Bell, Search, MessageSquare } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import GlobalSearch from './components/search/GlobalSearch';
 import OfflineIndicator from './components/features/OfflineIndicator';
@@ -118,10 +118,21 @@ export default function Layout({ children, currentPageName }) {
                     <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
                   )}
                 </Link>
-              </>
-            )}
 
-            {canCreate && (
+                <Link
+                  to={createPageUrl('Messages')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    currentPageName === 'Messages'
+                      ? 'text-white bg-neutral-900'
+                      : 'text-neutral-400 hover:text-white hover:bg-neutral-900/50'
+                  }`}
+                >
+                  <MessageSquare className="w-4 h-4" />
+                </Link>
+                </>
+                )}
+
+                {canCreate && (
               <Link
                 to={createPageUrl('StudioDashboard')}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
