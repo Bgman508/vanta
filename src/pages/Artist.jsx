@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Users, Music, MapPin, Globe, CheckCircle, Calendar, Award } from 'lucide-react';
 import ExperienceCard from '../components/experience/ExperienceCard';
 import FollowButton from '../components/features/FollowButton';
+import MerchStore from '../components/merchandise/MerchStore';
 import { format } from 'date-fns';
 
 export default function Artist() {
@@ -176,6 +177,9 @@ export default function Artist() {
             </div>
           </div>
         )}
+
+        {/* Merchandise */}
+        <MerchStore artistId={artistId} />
 
         {/* Experiences */}
         <div className="space-y-6 pb-20">

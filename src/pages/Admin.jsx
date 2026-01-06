@@ -11,6 +11,7 @@ import { format } from 'date-fns';
 import PlatformStats from '../components/analytics/PlatformStats';
 import ExportData from '../components/features/ExportData';
 import VerificationQueue from '../components/admin/VerificationQueue';
+import ContentModeration from '../components/moderation/ContentModeration';
 
 export default function Admin() {
   const [user, setUser] = useState(null);
@@ -157,7 +158,10 @@ export default function Admin() {
           <TabsContent value="overview" className="mt-6">
             <div className="space-y-6">
               <PlatformStats />
-              <VerificationQueue />
+              <div className="grid md:grid-cols-2 gap-6">
+                <VerificationQueue />
+                <ContentModeration />
+              </div>
             </div>
           </TabsContent>
 

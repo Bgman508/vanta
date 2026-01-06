@@ -5,6 +5,7 @@ import ExperienceCard from '../components/experience/ExperienceCard';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Filter } from 'lucide-react';
 import RecentlyPlayed from '../components/features/RecentlyPlayed';
+import AIRecommendations from '../components/features/AIRecommendations';
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -56,6 +57,9 @@ export default function Home() {
       <div className="max-w-7xl mx-auto px-6 py-16 space-y-12">
         {/* Recently Played */}
         {user && <RecentlyPlayed user={user} />}
+
+        {/* AI Recommendations */}
+        {user && <AIRecommendations user={user} />}
 
         {/* Filters */}
         <div className="flex items-center justify-between">
