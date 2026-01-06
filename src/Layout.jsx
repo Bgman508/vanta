@@ -221,6 +221,7 @@ export default function Layout({ children, currentPageName }) {
               <div className="space-y-2 text-sm text-neutral-500">
                 <Link to={createPageUrl('Trending')} className="block hover:text-white">Trending</Link>
                 <Link to={createPageUrl('Collections')} className="block hover:text-white">Collections</Link>
+                <Link to={createPageUrl('Leaderboard')} className="block hover:text-white">Leaderboard</Link>
                 <Link to={createPageUrl('ActivityFeed')} className="block hover:text-white">Activity Feed</Link>
                 <Link to={createPageUrl('Favorites')} className="block hover:text-white">My Favorites</Link>
                 <Link to={createPageUrl('Vault')} className="block hover:text-white">My Vault</Link>

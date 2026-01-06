@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Users, Music, MapPin, Globe, CheckCircle } from 'lucide-react';
+import { Users, Music, MapPin, Globe, CheckCircle, Calendar, Award } from 'lucide-react';
 import ExperienceCard from '../components/experience/ExperienceCard';
 import FollowButton from '../components/features/FollowButton';
+import { format } from 'date-fns';
 
 export default function Artist() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -34,6 +35,20 @@ export default function Artist() {
   const { data: followers } = useQuery({
     queryKey: ['artist-followers', artistId],
     queryFn: () => base44.entities.Follow.filter({ followingId: artistId }),
+    enabled: !!artistId,
+    initialData: []
+  });
+
+  const { data: tourDates } = useQuery({
+    queryKey: ['artist-tour', artistId],
+    queryFn: () => base44.entities.TourDate.filter({ artistId }, 'date'),
+    enabled: !!artistId,
+    initialData: []
+  });
+
+  const { data: badges } = useQuery({
+    queryKey: ['artist-badges', artistId],
+    queryFn: () => base44.entities.Badge.filter({ userId: artistId }),
     enabled: !!artistId,
     initialData: []
   });
@@ -105,6 +120,17 @@ export default function Artist() {
               <p className="text-neutral-300 mb-4 max-w-2xl">{artist.bio}</p>
             )}
 
+            {badges.length > 0 && (
+              <div className="flex items-center gap-2 mb-4">
+                {badges.map(badge => (
+                  <div key={badge.id} className="px-3 py-1 bg-amber-500/20 border border-amber-500/30 rounded-full text-xs text-amber-500 flex items-center gap-1">
+                    <Award className="w-3 h-3" />
+                    {badge.name}
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className="flex items-center gap-3">
               <FollowButton artistId={artistId} user={currentUser} size="default" />
               
@@ -122,6 +148,34 @@ export default function Artist() {
             </div>
           </div>
         </div>
+
+        {/* Tour Dates */}
+        {tourDates.length > 0 && (
+          <div className="space-y-4 mb-12">
+            <h2 className="text-2xl font-light text-white flex items-center gap-2">
+              <Calendar className="w-6 h-6" />
+              Tour Dates
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              {tourDates.slice(0, 6).map(date => (
+                <div key={date.id} className="p-4 bg-neutral-900/50 border border-neutral-800 rounded-lg">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-white">{date.venue}</p>
+                      <p className="text-xs text-neutral-400">{date.city}, {date.country}</p>
+                      <p className="text-xs text-neutral-500 mt-1">{format(new Date(date.date), 'MMM d, yyyy')}</p>
+                    </div>
+                    {date.ticketUrl && (
+                      <a href={date.ticketUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded text-xs text-white">
+                        Tickets
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Experiences */}
         <div className="space-y-6 pb-20">
