@@ -231,6 +231,8 @@ export default function Layout({ children, currentPageName }) {
                 <Link to={createPageUrl('Leaderboard')} className="block hover:text-white">Leaderboard</Link>
                 <Link to={createPageUrl('BeatsMarketplace')} className="block hover:text-white">Beats</Link>
                 <Link to={createPageUrl('Academy')} className="block hover:text-white">Academy</Link>
+                <Link to={createPageUrl('VirtualEvents')} className="block hover:text-white">Virtual Events</Link>
+                <Link to={createPageUrl('StudioBookings')} className="block hover:text-white">Studio Bookings</Link>
                 <Link to={createPageUrl('ActivityFeed')} className="block hover:text-white">Activity Feed</Link>
                 <Link to={createPageUrl('Favorites')} className="block hover:text-white">My Favorites</Link>
                 <Link to={createPageUrl('Vault')} className="block hover:text-white">My Vault</Link>

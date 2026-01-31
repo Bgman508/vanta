@@ -7,6 +7,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { toast } from 'sonner';
 
 export default function Academy() {
   const [user, setUser] = useState(null);
@@ -71,7 +72,18 @@ export default function Academy() {
 
                     <div className="flex items-center justify-between pt-2 border-t border-neutral-800">
                       <span className="text-lg font-light text-indigo-500">${(course.price / 100).toFixed(2)}</span>
-                      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700">
+                      <Button 
+                        size="sm" 
+                        className="bg-indigo-600 hover:bg-indigo-700"
+                        onClick={async () => {
+                          if (!user) {
+                            base44.auth.redirectToLogin();
+                            return;
+                          }
+                          const { data } = await base44.functions.invoke('enrollMasterclass', { masterclassId: course.id });
+                          if (data.success) toast.success('Enrolled successfully!');
+                        }}
+                      >
                         Enroll
                       </Button>
                     </div>

@@ -8,6 +8,11 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
 export default function GlobalSearch({ open, onOpenChange }) {
+  useEffect(() => {
+    const handleOpen = () => onOpenChange?.(true);
+    window.addEventListener('openSearch', handleOpen);
+    return () => window.removeEventListener('openSearch', handleOpen);
+  }, [onOpenChange]);
   const [query, setQuery] = useState('');
 
   const { data: experiences } = useQuery({

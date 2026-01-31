@@ -8,6 +8,7 @@ import { Plus, Trash2, Upload } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
 import RevenueCalculator from '../features/RevenueCalculator';
+import FileUploader from '../upload/FileUploader';
 
 export default function ExperienceForm({ user, experience, onSaved }) {
   const [formData, setFormData] = useState(experience || {
@@ -171,7 +172,12 @@ export default function ExperienceForm({ user, experience, onSaved }) {
             value={formData.coverUrl}
             onChange={(e) => updateField('coverUrl', e.target.value)}
             placeholder="https://..."
-            className="bg-neutral-900 border-neutral-800"
+            className="bg-neutral-900 border-neutral-800 mb-2"
+          />
+          <FileUploader 
+            accept="image/*" 
+            label="Upload Cover Image"
+            onUpload={(url) => updateField('coverUrl', url)}
           />
         </div>
       </div>
@@ -206,7 +212,7 @@ export default function ExperienceForm({ user, experience, onSaved }) {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-3">
                 <Input
                   value={item.title}
                   onChange={(e) => updateMediaItem(index, 'title', e.target.value)}
@@ -218,6 +224,11 @@ export default function ExperienceForm({ user, experience, onSaved }) {
                   onChange={(e) => updateMediaItem(index, 'url', e.target.value)}
                   placeholder="URL"
                   className="bg-neutral-800 border-neutral-700"
+                />
+                <FileUploader 
+                  accept="audio/*,video/*" 
+                  label="Upload Media File"
+                  onUpload={(url) => updateMediaItem(index, 'url', url)}
                 />
               </div>
             </div>
