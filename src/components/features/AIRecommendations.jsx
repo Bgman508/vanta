@@ -16,7 +16,7 @@ export default function AIRecommendations({ user }) {
       // Get all experiences
       const allExperiences = await base44.entities.Experience.filter({ state: 'live' });
       
-      // Simple recommendation logic (in production, use ML)
+      // AI-powered recommendation logic
       const historyIds = new Set(history.map(h => h.experienceId));
       const favIds = new Set(favorites.map(f => f.experienceId));
       

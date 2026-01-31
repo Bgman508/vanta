@@ -85,8 +85,36 @@ export default function Academy() {
             <TabsContent key={cat} value={cat} className="mt-6">
               <div className="grid md:grid-cols-3 gap-6">
                 {masterclasses.filter(c => c.category === cat).map(course => (
-                  <div key={course.id} className="bg-neutral-900/50 border border-neutral-800 rounded-lg overflow-hidden">
-                    {/* Same card structure */}
+                  <div key={course.id} className="bg-neutral-900/50 border border-neutral-800 rounded-lg overflow-hidden group">
+                    <div className="aspect-video bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                      <Play className="w-12 h-12 text-white" />
+                    </div>
+                    
+                    <div className="p-4 space-y-3">
+                      <Badge variant="outline">{course.category}</Badge>
+                      <h3 className="text-lg font-medium text-white group-hover:text-indigo-400 transition-colors">
+                        {course.title}
+                      </h3>
+                      <p className="text-sm text-neutral-400 line-clamp-2">{course.description}</p>
+                      
+                      <div className="flex items-center gap-4 text-xs text-neutral-500">
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          <span>{course.duration} min</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Star className="w-3 h-3 text-amber-500" />
+                          <span>{course.rating?.toFixed(1) || 'New'}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-2 border-t border-neutral-800">
+                        <span className="text-lg font-light text-indigo-500">${(course.price / 100).toFixed(2)}</span>
+                        <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700">
+                          Enroll
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>

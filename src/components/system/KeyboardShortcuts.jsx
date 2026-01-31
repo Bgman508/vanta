@@ -9,14 +9,26 @@ export default function KeyboardShortcuts() {
   const navigate = useNavigate();
 
   const shortcuts = [
-    { key: 'K', action: 'Open search', handler: () => {} },
+    { key: 'K', action: 'Open search', handler: () => {
+      const event = new CustomEvent('openSearch');
+      window.dispatchEvent(event);
+    }},
     { key: 'H', action: 'Go home', handler: () => navigate(createPageUrl('Home')) },
     { key: 'V', action: 'Open vault', handler: () => navigate(createPageUrl('Vault')) },
     { key: 'S', action: 'Open studio', handler: () => navigate(createPageUrl('StudioDashboard')) },
     { key: '/', action: 'Show shortcuts', handler: () => setOpen(true) },
-    { key: 'Space', action: 'Play/Pause', handler: () => {} },
-    { key: '→', action: 'Next track', handler: () => {} },
-    { key: '←', action: 'Previous track', handler: () => {} }
+    { key: 'Space', action: 'Play/Pause', handler: () => {
+      const event = new CustomEvent('playerToggle');
+      window.dispatchEvent(event);
+    }},
+    { key: '→', action: 'Next track', handler: () => {
+      const event = new CustomEvent('playerNext');
+      window.dispatchEvent(event);
+    }},
+    { key: '←', action: 'Previous track', handler: () => {
+      const event = new CustomEvent('playerPrev');
+      window.dispatchEvent(event);
+    }}
   ];
 
   useEffect(() => {
@@ -27,7 +39,8 @@ export default function KeyboardShortcuts() {
       
       if ((e.metaKey || e.ctrlKey) && key === 'k') {
         e.preventDefault();
-        // Trigger global search
+        const event = new CustomEvent('openSearch');
+        window.dispatchEvent(event);
       } else if (key === '/') {
         e.preventDefault();
         setOpen(true);

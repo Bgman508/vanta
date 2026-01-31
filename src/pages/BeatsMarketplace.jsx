@@ -6,11 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { toast } from 'sonner';
 
 export default function BeatsMarketplace() {
   const [user, setUser] = useState(null);
   const [genre, setGenre] = useState('all');
   const [search, setSearch] = useState('');
+  const [playing, setPlaying] = useState(null);
 
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => setUser(null));
@@ -79,10 +81,26 @@ export default function BeatsMarketplace() {
               <div className="flex items-center justify-between">
                 <span className="text-lg font-light text-indigo-500">${(beat.price / 100).toFixed(2)}</span>
                 <div className="flex gap-2">
-                  <Button size="icon" variant="ghost" className="text-neutral-400 hover:text-white">
+                  <Button 
+                    size="icon" 
+                    variant="ghost" 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => setPlaying(playing === beat.id ? null : beat.id)}
+                  >
                     <Play className="w-4 h-4" />
                   </Button>
-                  <Button size="icon" className="bg-indigo-600 hover:bg-indigo-700">
+                  <Button 
+                    size="icon" 
+                    className="bg-indigo-600 hover:bg-indigo-700"
+                    onClick={async () => {
+                      if (!user) {
+                        base44.auth.redirectToLogin();
+                        return;
+                      }
+                      const { data } = await base44.functions.invoke('purchaseBeat', { beatId: beat.id });
+                      if (data.success) toast.success('Beat purchased!');
+                    }}
+                  >
                     <ShoppingCart className="w-4 h-4" />
                   </Button>
                 </div>
