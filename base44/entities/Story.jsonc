@@ -1,0 +1,55 @@
+{
+  "name": "Story",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "IMAGE",
+        "VIDEO",
+        "AUDIO"
+      ],
+      "default": "IMAGE"
+    },
+    "mediaUrl": {
+      "type": "string"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "24 hours from creation"
+    },
+    "viewCount": {
+      "type": "number",
+      "default": 0
+    },
+    "viewers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "userId",
+    "mediaUrl"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": true,
+    "update": {
+      "userId": "{{user.id}}"
+    },
+    "delete": {
+      "userId": "{{user.id}}"
+    }
+  }
+}

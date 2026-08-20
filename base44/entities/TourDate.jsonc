@@ -1,0 +1,81 @@
+{
+  "name": "TourDate",
+  "type": "object",
+  "properties": {
+    "artistId": {
+      "type": "string"
+    },
+    "venue": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ticketUrl": {
+      "type": "string"
+    },
+    "experienceId": {
+      "type": "string",
+      "description": "Linked experience"
+    },
+    "capacity": {
+      "type": "number"
+    },
+    "soldOut": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "artistId",
+    "venue",
+    "city",
+    "date"
+  ],
+  "rls": {
+    "read": true,
+    "create": {
+      "$or": [
+        {
+          "artistId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "artistId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "artistId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

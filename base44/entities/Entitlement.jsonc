@@ -1,0 +1,64 @@
+{
+  "name": "Entitlement",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "User who has entitlement"
+    },
+    "experienceId": {
+      "type": "string",
+      "description": "Experience ID"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "UNLOCK",
+        "TICKET",
+        "MEMBERSHIP",
+        "GRANT"
+      ],
+      "description": "Type of entitlement"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "EXPIRED",
+        "REVOKED",
+        "REFUNDED"
+      ],
+      "default": "ACTIVE",
+      "description": "Entitlement status"
+    },
+    "grantedBy": {
+      "type": "string",
+      "enum": [
+        "PURCHASE",
+        "INVITE",
+        "ADMIN",
+        "PROMOTION"
+      ],
+      "description": "How entitlement was granted"
+    },
+    "receiptId": {
+      "type": "string",
+      "description": "Associated receipt ID"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Expiration date for time-limited entitlements"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional entitlement data"
+    }
+  },
+  "required": [
+    "userId",
+    "experienceId",
+    "type",
+    "grantedBy"
+  ]
+}

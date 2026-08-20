@@ -1,0 +1,68 @@
+{
+  "name": "LiveStream",
+  "type": "object",
+  "properties": {
+    "experienceId": {
+      "type": "string"
+    },
+    "hostId": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "streamUrl": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "SCHEDULED",
+        "LIVE",
+        "ENDED"
+      ],
+      "default": "SCHEDULED"
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "endedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "viewerCount": {
+      "type": "number",
+      "default": 0
+    },
+    "peakViewers": {
+      "type": "number",
+      "default": 0
+    },
+    "chatEnabled": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "experienceId",
+    "hostId",
+    "title"
+  ],
+  "rls": {
+    "create": {
+      "hostId": "{{user.id}}"
+    },
+    "read": true,
+    "update": {
+      "hostId": "{{user.id}}"
+    },
+    "delete": {
+      "hostId": "{{user.id}}"
+    }
+  }
+}

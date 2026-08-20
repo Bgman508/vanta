@@ -1,0 +1,73 @@
+{
+  "name": "VirtualEvent",
+  "type": "object",
+  "properties": {
+    "hostId": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "MEET_GREET",
+        "QA",
+        "LISTENING_PARTY",
+        "WORKSHOP"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration": {
+      "type": "number"
+    },
+    "capacity": {
+      "type": "number"
+    },
+    "attendees": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "price": {
+      "type": "number"
+    },
+    "streamUrl": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "UPCOMING",
+        "LIVE",
+        "ENDED"
+      ],
+      "default": "UPCOMING"
+    }
+  },
+  "required": [
+    "hostId",
+    "type",
+    "title",
+    "scheduledAt"
+  ],
+  "rls": {
+    "read": true,
+    "create": {
+      "hostId": "{{user.id}}"
+    },
+    "update": {
+      "hostId": "{{user.id}}"
+    },
+    "delete": {
+      "hostId": "{{user.id}}"
+    }
+  }
+}

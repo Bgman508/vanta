@@ -1,0 +1,61 @@
+{
+  "name": "Poll",
+  "type": "object",
+  "properties": {
+    "creatorId": {
+      "type": "string"
+    },
+    "question": {
+      "type": "string"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "votes": {
+            "type": "number",
+            "default": 0
+          }
+        }
+      }
+    },
+    "experienceId": {
+      "type": "string"
+    },
+    "endsAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "voters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "multipleChoice": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "creatorId",
+    "question",
+    "options"
+  ],
+  "rls": {
+    "create": {
+      "creatorId": "{{user.id}}"
+    },
+    "read": true,
+    "update": {
+      "creatorId": "{{user.id}}"
+    },
+    "delete": {
+      "creatorId": "{{user.id}}"
+    }
+  }
+}

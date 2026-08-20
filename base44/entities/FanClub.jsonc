@@ -1,0 +1,70 @@
+{
+  "name": "FanClub",
+  "type": "object",
+  "properties": {
+    "artistId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "tiers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "benefits": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "badgeUrl": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "memberCount": {
+      "type": "number",
+      "default": 0
+    },
+    "perks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exclusiveContent": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "artistId",
+    "name"
+  ],
+  "rls": {
+    "read": true,
+    "create": {
+      "artistId": "{{user.id}}"
+    },
+    "update": {
+      "artistId": "{{user.id}}"
+    },
+    "delete": {
+      "artistId": "{{user.id}}"
+    }
+  }
+}

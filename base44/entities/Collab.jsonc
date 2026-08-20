@@ -1,0 +1,72 @@
+{
+  "name": "Collab",
+  "type": "object",
+  "properties": {
+    "experienceId": {
+      "type": "string"
+    },
+    "initiatorId": {
+      "type": "string"
+    },
+    "collaboratorId": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "FEATURED",
+        "PRODUCER",
+        "WRITER",
+        "MIXER",
+        "ENGINEER"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "ACCEPTED",
+        "DECLINED"
+      ],
+      "default": "PENDING"
+    },
+    "splitPercentage": {
+      "type": "number"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "experienceId",
+    "initiatorId",
+    "collaboratorId",
+    "role"
+  ],
+  "rls": {
+    "create": {
+      "initiatorId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "initiatorId": "{{user.id}}"
+        },
+        {
+          "collaboratorId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "collaboratorId": "{{user.id}}"
+    },
+    "delete": {
+      "initiatorId": "{{user.id}}"
+    }
+  }
+}

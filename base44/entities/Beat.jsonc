@@ -1,0 +1,71 @@
+{
+  "name": "Beat",
+  "type": "object",
+  "properties": {
+    "producerId": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "bpm": {
+      "type": "number"
+    },
+    "key": {
+      "type": "string"
+    },
+    "genre": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "audioUrl": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "license": {
+      "type": "string",
+      "enum": [
+        "BASIC",
+        "PREMIUM",
+        "EXCLUSIVE"
+      ]
+    },
+    "sold": {
+      "type": "boolean",
+      "default": false
+    },
+    "downloads": {
+      "type": "number",
+      "default": 0
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "producerId",
+    "title",
+    "audioUrl",
+    "price"
+  ],
+  "rls": {
+    "read": true,
+    "create": {
+      "producerId": "{{user.id}}"
+    },
+    "update": {
+      "producerId": "{{user.id}}"
+    },
+    "delete": {
+      "producerId": "{{user.id}}"
+    }
+  }
+}

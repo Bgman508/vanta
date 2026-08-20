@@ -1,0 +1,52 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "fromUserId": {
+      "type": "string",
+      "description": "Sender"
+    },
+    "toUserId": {
+      "type": "string",
+      "description": "Recipient"
+    },
+    "content": {
+      "type": "string",
+      "description": "Message text"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    },
+    "threadId": {
+      "type": "string",
+      "description": "Conversation thread"
+    }
+  },
+  "required": [
+    "fromUserId",
+    "toUserId",
+    "content"
+  ],
+  "rls": {
+    "create": {
+      "fromUserId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "fromUserId": "{{user.id}}"
+        },
+        {
+          "toUserId": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "toUserId": "{{user.id}}"
+    },
+    "delete": {
+      "fromUserId": "{{user.id}}"
+    }
+  }
+}

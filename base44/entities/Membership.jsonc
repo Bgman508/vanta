@@ -1,0 +1,64 @@
+{
+  "name": "Membership",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "fanClubId": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "EXPIRED",
+        "CANCELLED"
+      ],
+      "default": "ACTIVE"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "renewalDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "autoRenew": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "userId",
+    "fanClubId",
+    "tier"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "userId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "userId": "{{user.id}}"
+    },
+    "delete": {
+      "userId": "{{user.id}}"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "Comment",
+  "type": "object",
+  "properties": {
+    "experienceId": {
+      "type": "string",
+      "description": "Experience commented on"
+    },
+    "userId": {
+      "type": "string",
+      "description": "User who commented"
+    },
+    "content": {
+      "type": "string",
+      "description": "Comment text"
+    },
+    "parentId": {
+      "type": "string",
+      "description": "Parent comment for replies"
+    },
+    "edited": {
+      "type": "boolean",
+      "default": false,
+      "description": "Has been edited"
+    },
+    "likesCount": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of likes"
+    }
+  },
+  "required": [
+    "experienceId",
+    "userId",
+    "content"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": true,
+    "update": {
+      "userId": "{{user.id}}"
+    },
+    "delete": {
+      "$or": [
+        {
+          "userId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

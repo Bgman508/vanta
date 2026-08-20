@@ -1,0 +1,69 @@
+{
+  "name": "Attendance",
+  "type": "object",
+  "properties": {
+    "experienceId": {
+      "type": "string",
+      "description": "ID of the experience"
+    },
+    "userId": {
+      "type": "string",
+      "description": "ID of the user who unlocked"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "free",
+        "paid",
+        "invite",
+        "event"
+      ],
+      "description": "Access tier used"
+    },
+    "amountPaid": {
+      "type": "number",
+      "description": "Amount paid in cents"
+    },
+    "territory": {
+      "type": "string",
+      "description": "Territory from which access was granted"
+    },
+    "attendedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When access was granted"
+    }
+  },
+  "required": [
+    "experienceId",
+    "userId",
+    "tier"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "userId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

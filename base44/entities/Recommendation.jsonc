@@ -1,0 +1,46 @@
+{
+  "name": "Recommendation",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "experienceId": {
+      "type": "string"
+    },
+    "score": {
+      "type": "number"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "SIMILAR_GENRE",
+        "POPULAR",
+        "FOLLOWING",
+        "HISTORY",
+        "TRENDING"
+      ]
+    },
+    "shown": {
+      "type": "boolean",
+      "default": false
+    },
+    "clicked": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "userId",
+    "experienceId",
+    "score"
+  ],
+  "rls": {
+    "read": {
+      "userId": "{{user.id}}"
+    },
+    "create": true,
+    "update": true,
+    "delete": true
+  }
+}

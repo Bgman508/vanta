@@ -1,0 +1,49 @@
+{
+  "name": "Follow",
+  "type": "object",
+  "properties": {
+    "followerId": {
+      "type": "string",
+      "description": "User who follows"
+    },
+    "followingId": {
+      "type": "string",
+      "description": "Artist being followed"
+    },
+    "notifications": {
+      "type": "boolean",
+      "default": true,
+      "description": "Notify on new releases"
+    }
+  },
+  "required": [
+    "followerId",
+    "followingId"
+  ],
+  "rls": {
+    "create": {
+      "followerId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "followerId": "{{user.id}}"
+        },
+        {
+          "followingId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "followerId": "{{user.id}}"
+    },
+    "delete": {
+      "followerId": "{{user.id}}"
+    }
+  }
+}

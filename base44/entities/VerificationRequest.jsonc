@@ -1,0 +1,77 @@
+{
+  "name": "VerificationRequest",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "User requesting verification"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "ARTIST",
+        "LABEL",
+        "PUBLISHER"
+      ],
+      "description": "Account type"
+    },
+    "proofUrls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Links to proof (social media, etc)"
+    },
+    "message": {
+      "type": "string",
+      "description": "Additional context"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "APPROVED",
+        "REJECTED"
+      ],
+      "default": "PENDING"
+    },
+    "reviewedBy": {
+      "type": "string",
+      "description": "Admin who reviewed"
+    },
+    "reviewNotes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "userId",
+    "type"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "userId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

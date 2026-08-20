@@ -1,0 +1,72 @@
+{
+  "name": "Merchandise",
+  "type": "object",
+  "properties": {
+    "sellerId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "APPAREL",
+        "VINYL",
+        "POSTER",
+        "ACCESSORY",
+        "DIGITAL"
+      ]
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "stock": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "stock": {
+      "type": "number"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "sellerId",
+    "name",
+    "price"
+  ],
+  "rls": {
+    "read": true,
+    "create": {
+      "sellerId": "{{user.id}}"
+    },
+    "update": {
+      "sellerId": "{{user.id}}"
+    },
+    "delete": {
+      "sellerId": "{{user.id}}"
+    }
+  }
+}

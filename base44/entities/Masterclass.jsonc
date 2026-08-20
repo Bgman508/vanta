@@ -1,0 +1,69 @@
+{
+  "name": "Masterclass",
+  "type": "object",
+  "properties": {
+    "instructorId": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "PRODUCTION",
+        "MIXING",
+        "MARKETING",
+        "BUSINESS",
+        "PERFORMANCE"
+      ]
+    },
+    "duration": {
+      "type": "number"
+    },
+    "videoUrl": {
+      "type": "string"
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "price": {
+      "type": "number"
+    },
+    "enrolled": {
+      "type": "number",
+      "default": 0
+    },
+    "rating": {
+      "type": "number"
+    },
+    "reviews": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "instructorId",
+    "title",
+    "videoUrl",
+    "price"
+  ],
+  "rls": {
+    "read": true,
+    "create": {
+      "instructorId": "{{user.id}}"
+    },
+    "update": {
+      "instructorId": "{{user.id}}"
+    },
+    "delete": {
+      "instructorId": "{{user.id}}"
+    }
+  }
+}

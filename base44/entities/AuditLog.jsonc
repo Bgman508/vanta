@@ -1,0 +1,55 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "User who performed action"
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "CREATE",
+        "UPDATE",
+        "DELETE",
+        "ACCESS",
+        "UNLOCK",
+        "APPROVE",
+        "REJECT",
+        "REFUND",
+        "INVITE",
+        "EXPORT"
+      ],
+      "description": "Action type"
+    },
+    "entityType": {
+      "type": "string",
+      "description": "Type of entity affected"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "ID of entity affected"
+    },
+    "changes": {
+      "type": "object",
+      "description": "Changes made (before/after)"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional context"
+    },
+    "ipAddress": {
+      "type": "string",
+      "description": "IP address of user"
+    },
+    "userAgent": {
+      "type": "string",
+      "description": "User agent string"
+    }
+  },
+  "required": [
+    "userId",
+    "action",
+    "entityType"
+  ]
+}

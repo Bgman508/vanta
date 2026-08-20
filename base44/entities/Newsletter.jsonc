@@ -1,0 +1,83 @@
+{
+  "name": "Newsletter",
+  "type": "object",
+  "properties": {
+    "senderId": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "recipientType": {
+      "type": "string",
+      "enum": [
+        "ALL_FOLLOWERS",
+        "ALL_FANS",
+        "CUSTOM"
+      ],
+      "default": "ALL_FOLLOWERS"
+    },
+    "recipientIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DRAFT",
+        "SCHEDULED",
+        "SENT"
+      ],
+      "default": "DRAFT"
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sentAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "openCount": {
+      "type": "number",
+      "default": 0
+    },
+    "clickCount": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "senderId",
+    "subject",
+    "content"
+  ],
+  "rls": {
+    "create": {
+      "senderId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "senderId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "senderId": "{{user.id}}"
+    },
+    "delete": {
+      "senderId": "{{user.id}}"
+    }
+  }
+}

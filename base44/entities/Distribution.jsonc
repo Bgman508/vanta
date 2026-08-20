@@ -1,0 +1,64 @@
+{
+  "name": "Distribution",
+  "type": "object",
+  "properties": {
+    "experienceId": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "string"
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Spotify, Apple Music, etc"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "PROCESSING",
+        "LIVE",
+        "FAILED"
+      ],
+      "default": "PENDING"
+    },
+    "releaseDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "isrc": {
+      "type": "string"
+    },
+    "upc": {
+      "type": "string"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "experienceId",
+    "userId",
+    "platforms"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": {
+      "userId": "{{user.id}}"
+    },
+    "update": {
+      "userId": "{{user.id}}"
+    },
+    "delete": {
+      "userId": "{{user.id}}"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "name": "Gift",
+  "type": "object",
+  "properties": {
+    "fromUserId": {
+      "type": "string",
+      "description": "User sending gift"
+    },
+    "toEmail": {
+      "type": "string",
+      "description": "Recipient email"
+    },
+    "toUserId": {
+      "type": "string",
+      "description": "Recipient user ID if registered"
+    },
+    "experienceId": {
+      "type": "string",
+      "description": "Experience being gifted"
+    },
+    "message": {
+      "type": "string",
+      "description": "Personal message"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "CLAIMED",
+        "EXPIRED"
+      ],
+      "default": "PENDING",
+      "description": "Gift status"
+    },
+    "claimedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When gift was claimed"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Gift expiration"
+    },
+    "receiptId": {
+      "type": "string",
+      "description": "Payment receipt"
+    }
+  },
+  "required": [
+    "fromUserId",
+    "toEmail",
+    "experienceId"
+  ],
+  "rls": {
+    "create": {
+      "fromUserId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "fromUserId": "{{user.id}}"
+        },
+        {
+          "toUserId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "toUserId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "name": "Organization",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Organization name"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "LABEL",
+        "PUBLISHER",
+        "COLLECTIVE"
+      ],
+      "description": "Organization type"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Organization description"
+    },
+    "logo_url": {
+      "type": "string",
+      "description": "Logo image URL"
+    },
+    "website": {
+      "type": "string",
+      "description": "Website URL"
+    },
+    "territory": {
+      "type": "string",
+      "description": "Primary territory ISO code"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Verified organization"
+    },
+    "ownerId": {
+      "type": "string",
+      "description": "User ID of org owner"
+    },
+    "settings": {
+      "type": "object",
+      "description": "Organization settings",
+      "properties": {
+        "requiresApproval": {
+          "type": "boolean",
+          "default": true
+        },
+        "defaultRevenueRules": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "ownerId"
+  ],
+  "rls": {
+    "create": {
+      "ownerId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "verified": true
+        },
+        {
+          "ownerId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "ownerId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "ownerId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

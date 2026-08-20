@@ -1,0 +1,51 @@
+{
+  "name": "PlayHistory",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "User who accessed"
+    },
+    "experienceId": {
+      "type": "string",
+      "description": "Experience accessed"
+    },
+    "lastAccessedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last access time"
+    },
+    "accessCount": {
+      "type": "number",
+      "default": 1,
+      "description": "Number of times accessed"
+    }
+  },
+  "required": [
+    "userId",
+    "experienceId"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "userId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "userId": "{{user.id}}"
+    },
+    "delete": {
+      "userId": "{{user.id}}"
+    }
+  }
+}

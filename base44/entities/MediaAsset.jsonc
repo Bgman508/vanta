@@ -1,0 +1,145 @@
+{
+  "name": "MediaAsset",
+  "type": "object",
+  "properties": {
+    "experienceId": {
+      "type": "string",
+      "description": "Associated experience"
+    },
+    "title": {
+      "type": "string",
+      "description": "Asset title"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "audio",
+        "video",
+        "image"
+      ],
+      "description": "Media type"
+    },
+    "storageKey": {
+      "type": "string",
+      "description": "Storage path/key (S3/R2)"
+    },
+    "publicUrl": {
+      "type": "string",
+      "description": "Public URL if available"
+    },
+    "duration": {
+      "type": "number",
+      "description": "Duration in seconds"
+    },
+    "fileSize": {
+      "type": "number",
+      "description": "File size in bytes"
+    },
+    "mimeType": {
+      "type": "string",
+      "description": "MIME type"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Technical metadata (bitrate, codec, etc)"
+    },
+    "order": {
+      "type": "number",
+      "description": "Display order within experience"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "UPLOADING",
+        "PROCESSING",
+        "READY",
+        "FAILED"
+      ],
+      "default": "READY",
+      "description": "Asset status"
+    }
+  },
+  "required": [
+    "experienceId",
+    "title",
+    "type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "ARTIST"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "LABEL"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "ARTIST"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "LABEL"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "ARTIST"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "LABEL"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "ARTIST"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "LABEL"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "OrgMembership",
+  "type": "object",
+  "properties": {
+    "orgId": {
+      "type": "string",
+      "description": "Organization ID"
+    },
+    "userId": {
+      "type": "string",
+      "description": "User ID"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "OWNER",
+        "ADMIN",
+        "MEMBER",
+        "VIEWER"
+      ],
+      "default": "MEMBER",
+      "description": "Role within organization"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "ACTIVE",
+        "SUSPENDED",
+        "REMOVED"
+      ],
+      "default": "PENDING",
+      "description": "Membership status"
+    },
+    "invitedBy": {
+      "type": "string",
+      "description": "User ID who sent invitation"
+    },
+    "permissions": {
+      "type": "array",
+      "description": "Specific permissions granted",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "orgId",
+    "userId",
+    "role"
+  ]
+}

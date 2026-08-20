@@ -1,0 +1,45 @@
+{
+  "name": "Favorite",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "User who favorited"
+    },
+    "experienceId": {
+      "type": "string",
+      "description": "Experience favorited"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Personal notes"
+    }
+  },
+  "required": [
+    "userId",
+    "experienceId"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "userId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "userId": "{{user.id}}"
+    },
+    "delete": {
+      "userId": "{{user.id}}"
+    }
+  }
+}

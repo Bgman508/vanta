@@ -1,0 +1,49 @@
+{
+  "name": "Queue",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "experienceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "currentIndex": {
+      "type": "number",
+      "default": 0
+    },
+    "shuffle": {
+      "type": "boolean",
+      "default": false
+    },
+    "repeat": {
+      "type": "string",
+      "enum": [
+        "OFF",
+        "ONE",
+        "ALL"
+      ],
+      "default": "OFF"
+    }
+  },
+  "required": [
+    "userId"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": {
+      "userId": "{{user.id}}"
+    },
+    "update": {
+      "userId": "{{user.id}}"
+    },
+    "delete": {
+      "userId": "{{user.id}}"
+    }
+  }
+}

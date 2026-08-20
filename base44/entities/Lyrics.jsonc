@@ -1,0 +1,37 @@
+{
+  "name": "Lyrics",
+  "type": "object",
+  "properties": {
+    "experienceId": {
+      "type": "string",
+      "description": "Experience ID"
+    },
+    "mediaIndex": {
+      "type": "number",
+      "description": "Track index in media array"
+    },
+    "lines": {
+      "type": "array",
+      "description": "Timestamped lyrics",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "number"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "language": {
+      "type": "string",
+      "default": "en"
+    }
+  },
+  "required": [
+    "experienceId",
+    "lines"
+  ]
+}

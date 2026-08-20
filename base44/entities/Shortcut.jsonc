@@ -1,0 +1,38 @@
+{
+  "name": "Shortcut",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "keys": {
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "userId",
+    "action",
+    "keys"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": {
+      "userId": "{{user.id}}"
+    },
+    "update": {
+      "userId": "{{user.id}}"
+    },
+    "delete": {
+      "userId": "{{user.id}}"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "name": "Activity",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "User who performed action"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "UNLOCK",
+        "FAVORITE",
+        "FOLLOW",
+        "GIFT_SENT",
+        "GIFT_RECEIVED",
+        "EXPERIENCE_PUBLISHED"
+      ],
+      "description": "Activity type"
+    },
+    "experienceId": {
+      "type": "string",
+      "description": "Related experience"
+    },
+    "targetUserId": {
+      "type": "string",
+      "description": "Target user (for follows, gifts)"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional activity data"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "PUBLIC",
+        "FOLLOWERS",
+        "PRIVATE"
+      ],
+      "default": "PUBLIC",
+      "description": "Who can see this activity"
+    }
+  },
+  "required": [
+    "userId",
+    "type"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "userId": "{{user.id}}"
+        },
+        {
+          "visibility": "PUBLIC"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "userId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "userId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

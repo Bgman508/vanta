@@ -1,0 +1,57 @@
+{
+  "name": "Badge",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "EARLY_ADOPTER",
+        "SUPERFAN",
+        "CURATOR",
+        "TASTEMAKER",
+        "SUPPORTER",
+        "COLLECTOR",
+        "PIONEER"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "iconUrl": {
+      "type": "string"
+    },
+    "progress": {
+      "type": "number",
+      "description": "Progress towards next level"
+    }
+  },
+  "required": [
+    "userId",
+    "type",
+    "name"
+  ],
+  "rls": {
+    "read": true,
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

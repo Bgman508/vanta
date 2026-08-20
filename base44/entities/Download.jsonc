@@ -1,0 +1,58 @@
+{
+  "name": "Download",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "experienceId": {
+      "type": "string"
+    },
+    "quality": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "LOSSLESS"
+      ],
+      "default": "HIGH"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "DOWNLOADING",
+        "COMPLETED",
+        "FAILED"
+      ],
+      "default": "PENDING"
+    },
+    "progress": {
+      "type": "number",
+      "default": 0
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "userId",
+    "experienceId"
+  ],
+  "rls": {
+    "create": {
+      "userId": "{{user.id}}"
+    },
+    "read": {
+      "userId": "{{user.id}}"
+    },
+    "update": {
+      "userId": "{{user.id}}"
+    },
+    "delete": {
+      "userId": "{{user.id}}"
+    }
+  }
+}

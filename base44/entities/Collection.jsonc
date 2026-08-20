@@ -1,0 +1,87 @@
+{
+  "name": "Collection",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Collection title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Collection description"
+    },
+    "curatorId": {
+      "type": "string",
+      "description": "User who curated"
+    },
+    "experienceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Experience IDs in collection"
+    },
+    "coverUrl": {
+      "type": "string",
+      "description": "Collection cover"
+    },
+    "public": {
+      "type": "boolean",
+      "default": false,
+      "description": "Public visibility"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured by platform"
+    }
+  },
+  "required": [
+    "title",
+    "curatorId"
+  ],
+  "rls": {
+    "create": {
+      "curatorId": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "public": true
+        },
+        {
+          "curatorId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "curatorId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "curatorId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

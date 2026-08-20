@@ -1,0 +1,75 @@
+{
+  "name": "PressKit",
+  "type": "object",
+  "properties": {
+    "artistId": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Press bio"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "High-res photos"
+    },
+    "logos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "videos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pressLinks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "publication": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "artistId"
+  ],
+  "rls": {
+    "read": true,
+    "create": {
+      "artistId": "{{user.id}}"
+    },
+    "update": {
+      "artistId": "{{user.id}}"
+    },
+    "delete": {
+      "artistId": "{{user.id}}"
+    }
+  }
+}

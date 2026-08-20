@@ -1,0 +1,239 @@
+{
+  "name": "Experience",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "album",
+        "single",
+        "event",
+        "session",
+        "archive"
+      ],
+      "description": "Type of experience"
+    },
+    "title": {
+      "type": "string",
+      "description": "Experience title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Experience description"
+    },
+    "ownerId": {
+      "type": "string",
+      "description": "ID of artist or label who owns this"
+    },
+    "ownerName": {
+      "type": "string",
+      "description": "Name of owner for display"
+    },
+    "coverUrl": {
+      "type": "string",
+      "description": "Cover image URL"
+    },
+    "contributors": {
+      "type": "array",
+      "description": "Writers, producers, collaborators",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "media": {
+      "type": "array",
+      "description": "Audio and video assets",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "audio",
+              "video"
+            ]
+          },
+          "url": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "accessRules": {
+      "type": "array",
+      "description": "Tier-based access configuration",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tier": {
+            "type": "string",
+            "enum": [
+              "free",
+              "paid",
+              "invite",
+              "event"
+            ]
+          },
+          "price": {
+            "type": "number"
+          },
+          "territories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "revenueRules": {
+      "type": "object",
+      "description": "Explicit percentage splits",
+      "properties": {
+        "artist": {
+          "type": "number"
+        },
+        "label": {
+          "type": "number"
+        },
+        "publisher": {
+          "type": "number"
+        },
+        "producer": {
+          "type": "number"
+        },
+        "platform": {
+          "type": "number"
+        }
+      }
+    },
+    "interactionEnabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Allow comments, reactions"
+    },
+    "liveCapable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Supports live streaming"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "scheduled",
+        "live",
+        "archived",
+        "expired"
+      ],
+      "default": "draft",
+      "description": "Current lifecycle state"
+    },
+    "scheduledAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When experience goes live"
+    },
+    "totalRevenue": {
+      "type": "number",
+      "default": 0,
+      "description": "Total revenue generated in cents"
+    },
+    "attendanceCount": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of unlocks/attendances"
+    }
+  },
+  "required": [
+    "type",
+    "title",
+    "ownerId",
+    "ownerName"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "LABEL"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "ARTIST"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "state": "live"
+        },
+        {
+          "ownerId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "ownerId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "ownerId": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

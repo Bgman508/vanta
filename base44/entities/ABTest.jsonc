@@ -1,0 +1,73 @@
+{
+  "name": "ABTest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "traffic": {
+            "type": "number"
+          },
+          "conversions": {
+            "type": "number",
+            "default": 0
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DRAFT",
+        "RUNNING",
+        "COMPLETED"
+      ],
+      "default": "DRAFT"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "name",
+    "variants"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

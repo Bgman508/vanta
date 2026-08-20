@@ -1,0 +1,66 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "bio": {
+      "type": "string",
+      "description": "User biography"
+    },
+    "avatar_url": {
+      "type": "string",
+      "description": "Profile avatar URL"
+    },
+    "territory": {
+      "type": "string",
+      "default": "US",
+      "description": "User territory ISO code"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Verified artist/label status"
+    },
+    "socialLinks": {
+      "type": "object",
+      "description": "Social media links",
+      "properties": {
+        "instagram": {
+          "type": "string"
+        },
+        "twitter": {
+          "type": "string"
+        },
+        "spotify": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        }
+      }
+    },
+    "preferences": {
+      "type": "object",
+      "description": "User preferences",
+      "properties": {
+        "emailNotifications": {
+          "type": "boolean",
+          "default": true
+        },
+        "eventReminders": {
+          "type": "boolean",
+          "default": true
+        },
+        "newReleases": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  },
+  "required": [
+    "bio",
+    "avatar_url",
+    "socialLinks",
+    "preferences"
+  ]
+}

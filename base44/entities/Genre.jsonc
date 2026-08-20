@@ -1,0 +1,26 @@
+{
+  "name": "Genre",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Genre name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly slug"
+    },
+    "description": {
+      "type": "string",
+      "description": "Genre description"
+    },
+    "color": {
+      "type": "string",
+      "description": "Brand color hex"
+    }
+  },
+  "required": [
+    "name",
+    "slug"
+  ]
+}
